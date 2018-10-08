@@ -48,7 +48,7 @@
 
 			
 			$scope.findPage=function(page,size){	
-				$http.get('../brand/findPage.do?page='+page+'&rows='+size).success(
+				$http.get('../brand/findPage.do?page='+page+'&size='+size).success(
 						function(response){
 							$scope.list=response.rows;//显示当前页的数据	
 							$scope.paginationConf.totalItems=response.total;//更新总记录数
