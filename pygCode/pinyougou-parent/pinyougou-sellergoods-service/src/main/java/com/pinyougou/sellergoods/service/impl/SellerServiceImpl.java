@@ -48,7 +48,7 @@ public class SellerServiceImpl implements SellerService {
 	@Override
 	public void add(TbSeller seller) {
 		seller.setStatus("0");
-		seller.setCreateTime(new Date());
+		seller.setCreateTime(new Date()); 
 
 		sellerMapper.insert(seller);		
 	}
