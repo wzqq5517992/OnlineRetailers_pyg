@@ -51,6 +51,20 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 		);				
 	}
 	
+	
+	//新增 
+	$scope.add=function(){
+		sellerService.add( $scope.entity  ).success(
+			function(response){
+				if(response.success){
+					//如果注册成功，跳转到登录页
+		        	location.href="shoplogin.html";
+				}else{
+					alert(response.message);
+				}
+			}		
+		);				
+	}
 	 
 	//批量删除 
 	$scope.dele=function(){			
@@ -76,20 +90,5 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 			}			
 		);
 	}
-	
-	//注册用户
-	$scope.add=function(){						
-		sellerService.add($scope.entity).success(
-			function(response){
-				if(response.success){
-					//注册成功，跳转到登陆页面
-					location.href='shoplogin.html';
-				}else{
-					alert(response.message);
-				}
-			}		
-		);				
-	}
-
     
 });	

@@ -83,7 +83,7 @@ public class SellerServiceImpl implements SellerService {
 	}
 	
 	
-		@Override
+	@Override
 	public PageResult findPage(TbSeller seller, int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		
@@ -163,5 +163,15 @@ public class SellerServiceImpl implements SellerService {
 		Page<TbSeller> page= (Page<TbSeller>)sellerMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
+
+	@Override
+	public void updateStatus(String sellerId, String status) {
+		TbSeller Seller=sellerMapper.selectByPrimaryKey(sellerId);
+		Seller.setStatus(status);
+		sellerMapper.updateByPrimaryKey(Seller);
+			
+		}
 	
+		
+		
 }

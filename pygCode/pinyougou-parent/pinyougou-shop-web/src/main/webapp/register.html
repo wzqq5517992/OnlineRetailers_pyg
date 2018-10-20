@@ -9,16 +9,15 @@
     <link rel="stylesheet" type="text/css" href="css/webbase.css" />
     <link rel="stylesheet" type="text/css" href="css/pages-register.css" />
     
-    
-	<script type="text/javascript" src="plugins/angularjs/angular.min.js">  </script>
-	<script type="text/javascript" src="js/base.js">  </script>
-	<script type="text/javascript" src="js/service/sellerService.js">  </script>
-	<script type="text/javascript" src="js/controller/baseController.js">  </script>
-	<script type="text/javascript" src="js/controller/sellerController.js">  </script>
+    <script type="text/javascript" src="plugins/angularjs/angular.min.js"></script>
+	
+	<script type="text/javascript" src="js/base.js"></script>
+	<script type="text/javascript" src="js/service/sellerService.js"></script>
+	<script type="text/javascript" src="js/controller/baseController.js"></script>
+	<script type="text/javascript" src="js/controller/sellerController.js"></script>
     
 </head>
-
-<body   ng-app="pinyougou" ng-controller="sellerController>
+<body ng-app="pinyougou" ng-controller="sellerController">
 	<div class="register py-container ">
 		<!--head-->
 		<div class="logoArea">
@@ -33,7 +32,7 @@
 					<div class="control-group">
 						<label class="control-label">登陆名（不可修改）：</label>
 						<div class="controls">
-							<input type="text" placeholder="登陆名" ng-model="entity.sellerId"  class="input-xfat input-xlarge">
+							<input type="text" placeholder="登陆名" ng-model="entity.sellerId" class="input-xfat input-xlarge">
 						</div>
 					</div>
 					
@@ -61,7 +60,7 @@
 					<div class="control-group">
 						<label class="control-label">公司电话：</label>
 						<div class="controls">
-							<input type="text" placeholder="公司电话" ng-model="entity.telephone"  class="input-xfat input-xlarge">
+							<input type="text" placeholder="公司电话" ng-model="entity.telephone" class="input-xfat input-xlarge">
 						</div>
 					</div>
 					
@@ -75,35 +74,35 @@
 					<div class="control-group">
 						<label class="control-label">联系人姓名：</label>
 						<div class="controls">
-							<input type="text" placeholder="联系人姓名"  ng-model="entity.linkmanName"  class="input-xfat input-xlarge">
+							<input type="text" placeholder="联系人姓名" ng-model="entity.linkmanName" class="input-xfat input-xlarge">
 						</div>
 					</div>
 					
 					<div class="control-group">
 						<label class="control-label">联系人QQ：</label>
 						<div class="controls">
-							<input type="text" placeholder="联系人QQ"  ng-model="entity.linkmanQq" class="input-xfat input-xlarge">
+							<input type="text" placeholder="联系人QQ" ng-model="entity.linkmanQq"  class="input-xfat input-xlarge">
 						</div>
 					</div>
 					
 					<div class="control-group">
 						<label class="control-label">联系人手机：</label>
 						<div class="controls">
-							<input type="text" placeholder="联系人手机" ng-model="entity.linkmanMobile"  class="input-xfat input-xlarge">
+							<input type="text" placeholder="联系人手机" ng-model="linkmanMobile" class="input-xfat input-xlarge">
 						</div>
 					</div>
 					
 					<div class="control-group">
 						<label class="control-label">联系人EMAIL：</label>
 						<div class="controls">
-							<input type="text" placeholder="联系人EMAIL" ng-email="entity.linkmanEmail" class="input-xfat input-xlarge">
+							<input type="text" placeholder="联系人EMAIL" ng-model="entity.linkmanEmail" class="input-xfat input-xlarge">
 						</div>
 					</div>
 					
 					<div class="control-group">
 						<label class="control-label">营业执照号：</label>
 						<div class="controls">
-							<input type="text" placeholder="营业执照号" ng-model="entity.licenseNumber"  class="input-xfat input-xlarge">
+							<input type="text" placeholder="营业执照号" ng-model="entity.licenseNumber" class="input-xfat input-xlarge">
 						</div>
 					</div>
 					
@@ -117,7 +116,7 @@
 					<div class="control-group">
 						<label class="control-label">组织机构代码证：</label>
 						<div class="controls">
-							<input type="text" placeholder="组织机构代码证" ng-model="entity.orgNumber" class="input-xfat input-xlarge">
+							<input type="text" placeholder="组织机构代码证" mg-model="entity.orgNumber" class="input-xfat input-xlarge">
 						</div>
 					</div>
 					
@@ -131,14 +130,14 @@
 					<div class="control-group">
 						<label class="control-label">法定代表人身份证号：</label>
 						<div class="controls">
-							<input type="text" placeholder="法定代表人身份证号" ng-model="entity.legalPersonCardId"  class="input-xfat input-xlarge">
+							<input type="text" placeholder="法定代表人身份证号"  ng-model="entity.legalPersonCardId" class="input-xfat input-xlarge">
 						</div>
 					</div>	
 
 					<div class="control-group">
 						<label class="control-label">开户行名称：</label>
 						<div class="controls">
-							<input type="text" placeholder="开户行名称" ng-model="entity.bankUser"  class="input-xfat input-xlarge">
+							<input type="text" placeholder="开户行名称" ng-model="entity.bankUser" class="input-xfat input-xlarge">
 						</div>
 					</div>
 
@@ -152,7 +151,7 @@
 					<div class="control-group">
 						<label class="control-label">银行账号：</label>
 						<div class="controls">
-							<input type="text" placeholder="银行账号" ng-model=""  class="input-xfat input-xlarge">
+							<input type="text" placeholder="银行账号" ng-model="entity.bankUser" class="input-xfat input-xlarge">
 						</div>
 					</div>					
 					
@@ -191,11 +190,7 @@
 	</div>
 
 
-<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="js/plugins/jquery.easing/jquery.easing.min.js"></script>
-<script type="text/javascript" src="js/plugins/sui/sui.min.js"></script>
-<script type="text/javascript" src="js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
-<script type="text/javascript" src="js/pages/register.js"></script>
+
 </body>
 
 </html>
