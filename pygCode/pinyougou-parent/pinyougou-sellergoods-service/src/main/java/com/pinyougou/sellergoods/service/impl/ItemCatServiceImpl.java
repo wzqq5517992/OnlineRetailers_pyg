@@ -77,9 +77,10 @@ public class ItemCatServiceImpl implements ItemCatService {
 			itemCatMapper.deleteByPrimaryKey(id);
 		}		
 	}
-	
-	
-		@Override
+	/**
+	 * 分页
+	 */
+	@Override
 	public PageResult findPage(TbItemCat itemCat, int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		
@@ -96,5 +97,17 @@ public class ItemCatServiceImpl implements ItemCatService {
 		Page<TbItemCat> page= (Page<TbItemCat>)itemCatMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
+	/**
+	 * 根据上级ID查询列表
+	 */
+	@Override
+	public List<TbItemCat> findByParentId(Long parentId) {		
+		TbItemCatExample example1=new TbItemCatExample();
+		Criteria criteria1 = example1.createCriteria();
+		criteria1.andParentIdEqualTo(parentId);
+		return  itemCatMapper.selectByExample(example1);		
+	}
+	
+
 	
 }
