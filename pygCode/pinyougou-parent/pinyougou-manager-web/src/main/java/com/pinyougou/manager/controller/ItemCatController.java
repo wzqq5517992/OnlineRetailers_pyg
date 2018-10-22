@@ -91,8 +91,18 @@ public class ItemCatController {
 	@RequestMapping("/delete")
 	public Result delete(Long [] ids){
 		try {
-			itemCatService.delete(ids);
-			return new Result(true, "删除成功"); 
+			List<TbItemCat> list=null;
+			for (Long id : ids) {
+				list=itemCatService.findByParentId(id);
+				System.out.println("list:"+list);
+			}
+			if (list.size()>0) {
+				return new Result(false, "存在子数据，删除失败");
+			} else {
+				itemCatService.delete(ids);
+				return new Result(true, "删除成功");
+			}
+ 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result(false, "删除失败");

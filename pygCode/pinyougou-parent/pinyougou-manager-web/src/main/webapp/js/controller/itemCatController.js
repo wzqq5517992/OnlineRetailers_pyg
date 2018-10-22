@@ -65,7 +65,10 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 				if(response.success){
 					$scope.reloadList();//刷新列表
 					$scope.selectIds=[];
-				}						
+				}
+				else{
+					alert(response.message);
+				}
 			}		
 		);				
 	}
@@ -101,7 +104,9 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 	$scope.selectList=function(p_entity){
 		//alert($scope.grade);
 		
-		$scope.parentId=parentId;//记住上级ID
+		
+		$scope.parentId=p_entity.parentId;//记住上级ID
+		//alert($scope.parentId);
 		
 		if($scope.grade==1){
 			$scope.entity_1=null;
