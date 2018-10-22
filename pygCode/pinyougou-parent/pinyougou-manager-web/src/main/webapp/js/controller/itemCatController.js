@@ -37,13 +37,18 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 		if($scope.entity.id!=null){//如果有ID
 			serviceObject=itemCatService.update( $scope.entity ); //修改  
 		}else{
-			serviceObject=itemCatService.add( $scope.entity  );//增加 
+			
+			$scope.entity.parentId=$scope.parentId;//赋予上级ID
+			
+			serviceObject=itemCatService.add($scope.entity);//增加 
 		}				
 		serviceObject.success(
 			function(response){
 				if(response.success){
-					//重新查询 
-		        	$scope.reloadList();//重新加载
+		        //	$scope.reloadList();//重新加载
+		        	//重新查询 
+					$scope.findByParentId($scope.parentId);//重新加载
+
 				}else{
 					alert(response.message);
 				}
@@ -92,9 +97,11 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 		$scope.grade=value;
 	}
 	
-	
+	$scope.parentId=0;//上级ID默认值
 	$scope.selectList=function(p_entity){
 		//alert($scope.grade);
+		
+		$scope.parentId=parentId;//记住上级ID
 		
 		if($scope.grade==1){
 			$scope.entity_1=null;
@@ -112,6 +119,7 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 		$scope.findByParentId(p_entity.id);
 		
 	}
+	
 	
 	
 	
