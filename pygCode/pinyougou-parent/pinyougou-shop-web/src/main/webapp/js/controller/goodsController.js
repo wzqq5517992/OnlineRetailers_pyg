@@ -34,10 +34,9 @@ app.controller('goodsController' ,function($scope,$controller   ,goodsService){
 	//增加
 	$scope.add=function(){								
 		goodsService.add( $scope.entity).success(
-			function(response){
-				
+			function(response){				
 				if(response.success){
-					alert('新增 商品成功');					
+					alert('新增商品成功');					
 					$scope.entity={};
 				}else{
 					alert(response.message);
