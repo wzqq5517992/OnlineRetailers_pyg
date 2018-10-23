@@ -32,12 +32,16 @@ app.controller('goodsController' ,function($scope,$controller   ,goodsService){
 	}
 	
 	//增加
-	$scope.add=function(){								
+	$scope.add=function(){
+		
+		//获取富文本的信息赋值给introduction字段
+		$scope.entity.goodsDesc.introduction=editor.html();		
 		goodsService.add( $scope.entity).success(
 			function(response){				
 				if(response.success){
 					alert('新增商品成功');					
-					$scope.entity={};
+					$scope.entity={};//清空页面信息
+					editor.html('');//清空富文本编辑器
 				}else{
 					alert(response.message);
 				}
