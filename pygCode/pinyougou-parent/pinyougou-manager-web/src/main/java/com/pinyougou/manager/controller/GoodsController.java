@@ -49,7 +49,7 @@ public class GoodsController {
 	@RequestMapping("/add")
 	public Result add(@RequestBody TbGoods goods){
 		try {
-			goodsService.add(goods);
+			//goodsService.add(goods);  这里用不到这个接口
 			return new Result(true, "增加成功");
 		} catch (Exception e) {
 			e.printStackTrace();
