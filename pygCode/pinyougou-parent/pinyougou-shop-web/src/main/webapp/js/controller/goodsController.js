@@ -84,6 +84,16 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,itemC
 	    		 }
 	      );
 	}
+	
+	//读取一级分类
+	$scope.selectItemCat1List=function(){
+	      itemCatService.findByParentId(0).success(
+	    		 function(response){
+	    			 $scope.itemCat1List = response; 
+	    		 }
+	      );
+	}
+
 
     
 });	

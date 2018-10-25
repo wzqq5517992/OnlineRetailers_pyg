@@ -32,7 +32,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		System.out.println("经过了UserDetailsServiceImpl");
 		//构建角色列表
 		List<GrantedAuthority> grantAuths=new ArrayList();
+		System.out.println("1");
 		grantAuths.add(new SimpleGrantedAuthority("ROLE_SELLER"));
+		System.out.println("2"+username);
 		
 		//得到商家对象
 		TbSeller seller = sellerService.findOne(username);
