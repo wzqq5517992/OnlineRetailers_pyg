@@ -29,13 +29,10 @@
 	<script type="text/javascript" src="../js/service/itemCatService.js"></script>
 	<script type="text/javascript" src="../js/service/typeTemplateService.js"></script>
 	<script type="text/javascript" src="../js/controller/baseController.js"></script>
-	<script type="text/javascript" src="../js/controller/goodsController.js"></script>
-      
-    
-    
+	<script type="text/javascript" src="../js/controller/goodsController.js"></script>   
 </head>
 
-<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="goodsController" ng-init="selectItemCat1List()">
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="goodsController" ng-init="selectItemCat1List();findOne()">
 
             <!-- 正文区域 -->
             <section class="content">
@@ -201,7 +198,10 @@
 					                        <div class="col-md-10 data">
 					                               
 					                            <span ng-repeat="option in pojo.options">
-					                            	<input  type="checkbox" ng-click="updateSpecAttribute($event,pojo.text,option.optionName);createItemList()" >{{option.optionName}}					                            				                            	
+					                            	<input  type="checkbox" 
+					                            	ng-click="updateSpecAttribute($event,pojo.text,option.optionName);createItemList()" 
+					                            	ng-checked="checkAttributeValue(pojo.text,option.optionName)"
+					                            	>{{option.optionName}}					                            				                            	
 					                            </span>  																							
 					                            	
 					                        </div>
