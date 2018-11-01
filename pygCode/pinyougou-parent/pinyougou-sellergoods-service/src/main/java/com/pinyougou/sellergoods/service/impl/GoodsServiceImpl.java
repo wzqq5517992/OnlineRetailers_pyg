@@ -23,6 +23,7 @@ import com.pinyougou.pojo.TbGoodsExample;
 import com.pinyougou.pojo.TbGoodsExample.Criteria;
 import com.pinyougou.pojo.TbItem;
 import com.pinyougou.pojo.TbItemCat;
+import com.pinyougou.pojo.TbItemExample;
 import com.pinyougou.pojo.TbSeller;
 import com.pinyougou.pojogroup.Goods;
 import com.pinyougou.sellergoods.service.GoodsService;
@@ -39,7 +40,7 @@ import entity.PageResult;
 public class GoodsServiceImpl implements GoodsService {
 
 	@Autowired
-	private TbGoodsMapper goodsMapper;
+	private TbGoodsMapper goodsMapper; 
 	@Autowired
 	private TbGoodsDescMapper goodsDescMapper;
 	@Autowired
@@ -79,6 +80,10 @@ public class GoodsServiceImpl implements GoodsService {
 		goodsMapper.insert(goods.getGoods());// 插入Goodde基本信息
 		goods.getGoodsDesc().setGoodsId(goods.getGoods().getId());// 设置ID
 		goodsDescMapper.insert(goods.getGoodsDesc());// 插入商品扩展数据
+		saveItemList(goods);
+
+	}
+	private void saveItemList(Goods goods){
 		if ("1".equals(goods.getGoods().getIsEnableSpec())) {
 		for (TbItem item : goods.getItemList()) {
 			// 构建标题 SPU名称+规格选项值
@@ -137,8 +142,19 @@ public class GoodsServiceImpl implements GoodsService {
 	 * 修改
 	 */
 	@Override
-	public void update(TbGoods goods) {
-		goodsMapper.updateByPrimaryKey(goods);
+	public void update(Goods goods) {
+		//更新基本表数据
+		goodsMapper.updateByPrimaryKey(goods.getGoods());
+		//更新扩展表数据
+		goodsDescMapper.updateByPrimaryKey(goods.getGoodsDesc());
+		//删除原有SKU的商品数据
+		TbItemExample	example=new  TbItemExample();
+		com.pinyougou.pojo.TbItemExample.Criteria criteria = example.createCriteria();
+		criteria.andGoodsIdEqualTo(goods.getGoods().getId());
+		itemMapper.deleteByExample(example);
+		//插入新的SKU的商品数据
+		saveItemList(goods);
+		
 	}
 
 	/**
@@ -156,10 +172,16 @@ public class GoodsServiceImpl implements GoodsService {
 		//商品扩展表
 		TbGoodsDesc tbGoodsDesc = goodsDescMapper.selectByPrimaryKey(id);
 		goods.setGoodsDesc(tbGoodsDesc);
-
+		
+		//查询SKU商品列表
+		TbItemExample example=new TbItemExample();
+		com.pinyougou.pojo.TbItemExample.Criteria criteria = example.createCriteria();
+		criteria.andGoodsIdEqualTo(id);//查询条件：商品ID
+		List<TbItem> itemList = itemMapper.selectByExample(example);		
+		goods.setItemList(itemList);
 		 return goods;
 	}
-
+	
 	/**
 	 * 批量删除
 	 */
