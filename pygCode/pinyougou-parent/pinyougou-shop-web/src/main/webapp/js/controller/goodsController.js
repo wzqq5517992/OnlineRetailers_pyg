@@ -244,9 +244,6 @@ app.controller('goodsController' ,function($scope,$controller,$location,goodsSer
 		return newList;
 	}
 	$scope.status=['未审核','已审核','审核未通过','关闭'];//商品状态
-	
-	
-	
 	$scope.itemCatList=[];//商品分类列表
 	//加载商品分类列表
 	$scope.findItemCatList=function(){		
