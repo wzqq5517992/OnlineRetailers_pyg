@@ -128,5 +128,21 @@ public class GoodsController {
 
 		return goodsService.findPage(goods, page, rows);		
 	}
+	/**
+	 * 商品上下架
+	 * @param ids
+	 * @param status
+	 */
+	@RequestMapping("updateMarketableStatus")
+	public Result updateMarketableStatus(long[] ids, String status) {
+		try {
+			goodsService.updateMarketableStatus(ids, status);
+			return  new  Result(true,"修改成功");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return  new  Result(false,"修改失败");
+		}
+	}
 	
 }

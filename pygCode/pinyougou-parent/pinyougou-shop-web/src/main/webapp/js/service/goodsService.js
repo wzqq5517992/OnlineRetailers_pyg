@@ -28,5 +28,9 @@ app.service('goodsService',function($http){
 	//搜索
 	this.search=function(page,rows,searchEntity){
 		return $http.post('../goods/search.do?page='+page+"&rows="+rows, searchEntity);
-	}    	
+	}  
+	//更改商品上下架状态
+	this.updateMarketableStatus=function(ids,status){
+		return $http.get('../goods/updateMarketableStatus.do?ids='+ids+"&status="+status);
+	} 
 });

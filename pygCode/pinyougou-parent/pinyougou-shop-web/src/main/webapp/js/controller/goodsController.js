@@ -244,6 +244,7 @@ app.controller('goodsController' ,function($scope,$controller,$location,goodsSer
 		return newList;
 	}
 	$scope.status=['未审核','已审核','审核未通过','关闭'];//商品状态
+	$scope.isMarketable=['上架','上架','下架'];
 	$scope.itemCatList=[];//商品分类列表
 	//加载商品分类列表
 	$scope.findItemCatList=function(){		
@@ -269,6 +270,20 @@ app.controller('goodsController' ,function($scope,$controller,$location,goodsSer
 				return false;
 			}
 		}			
+	}
+	
+	//更改商品上下架状态
+	$scope.updateMarketableStatus=function(status){		
+		goodsService.updateMarketableStatus($scope.selectIds,status).success(
+			function(response){
+				if(response.success){//成功
+					$scope.reloadList();//刷新列表
+					$scope.selectIds=[];//清空ID集合
+				}else{
+					alert(response.message);
+				}
+			}
+		);		
 	}
 
 	

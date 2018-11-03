@@ -53,6 +53,7 @@
                                         <button type="button" class="btn btn-default" title="删除" ><i class="fa fa-trash-o"></i> 删除</button>
                                         <button type="button" class="btn btn-default" title="提交审核" ><i class="fa fa-check"></i> 提交审核</button>
                                         <button type="button" class="btn btn-default" title="屏蔽" onclick='confirm("你确认要屏蔽吗？")'><i class="fa fa-ban"></i> 屏蔽</button>
+                                        <button type="button" class="btn btn-default" title="下架" ng-click="updateMarketableStatus('2')"><i class="fa fa-ban"></i> 下架</button>
                                         <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
                                     </div>
                                 </div>
@@ -80,6 +81,7 @@
 			                                  <input id="selall" type="checkbox" class="icheckbox_square-blue">
 			                              </th> 
 										  <th class="sorting_asc">商品ID</th>
+					                      <th class="sorting">上下架状态</th>
 									      <th class="sorting">商品名称</th>
 									      <th class="sorting">商品价格</th>
 									      <th class="sorting">一级分类</th>
@@ -91,8 +93,9 @@
 			                      </thead>
 			                      <tbody>
 									<tr ng-repeat="entity in list">
-									    <td><input  type="checkbox"></td>			                              
+									    <td><input  type="checkbox"  ng-click="updateSelection($event,entity.id)"></td>			                              
 									   	<td>{{entity.id}}</td>
+									   	<td>{{isMarketable[entity.isMarketable]}}</td>	
 									    <td>{{entity.goodsName}}</td>
 									    <td>{{entity.price}}</td>
 										<td>{{itemCatList[entity.category1Id]}}</td>
@@ -101,7 +104,7 @@
 										
 									    <td>
 									    	{{status[entity.auditStatus]}}
-									    </td>		                                  
+									    </td>								    	                                  
 									    <td class="text-center">                                          
 									   	  
 									   	   <a href="goods_edit.html#?id={{entity.id}}" class="btn bg-olive btn-xs">修改</a>                 
