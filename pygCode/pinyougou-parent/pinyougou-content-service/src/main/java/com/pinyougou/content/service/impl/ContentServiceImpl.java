@@ -1,6 +1,8 @@
 package com.pinyougou.content.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -46,7 +48,10 @@ public class ContentServiceImpl implements ContentService {
 	 */
 	@Override
 	public void add(TbContent content) {
-		contentMapper.insert(content);		
+		contentMapper.insert(content);	
+		//清除缓存
+		redisTemplate.boundHashOps("content").delete(content.getCategoryId());
+
 	}
 
 	
@@ -55,6 +60,13 @@ public class ContentServiceImpl implements ContentService {
 	 */
 	@Override
 	public void update(TbContent content){
+		//查询修改前的分类Id
+		Long categoryId =contentMapper.selectByPrimaryKey(content.getId()).getCategoryId();
+		redisTemplate.boundHashOps("content").delete(categoryId);
+		//如果分类ID发生了修改,清除修改后的分类ID的缓存
+		if(categoryId.longValue()!=content.getCategoryId().longValue()){
+			redisTemplate.boundHashOps("content").delete(content.getCategoryId());
+		}
 		contentMapper.updateByPrimaryKey(content);
 	}	
 	
@@ -74,6 +86,9 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public void delete(Long[] ids) {
 		for(Long id:ids){
+			//广告分类ID
+			Long categoryId = contentMapper.selectByPrimaryKey(id).getCategoryId();
+			redisTemplate.boundHashOps("content").delete(categoryId);
 			contentMapper.deleteByPrimaryKey(id);
 		}		
 	}
@@ -106,15 +121,26 @@ public class ContentServiceImpl implements ContentService {
 		return new PageResult(page.getTotal(), page.getResult());
 	}
 
+		@Autowired
+		private RedisTemplate redisTemplate;
+
 		@Override
 		public List<TbContent> findByCategoryId(Long categoryId) {
+			
+			List<TbContent> contentList= (List<TbContent>) redisTemplate.boundHashOps("content").get(categoryId);
+			if (contentList==null) {
 			//根据广告分类ID查询广告列表		
 			TbContentExample contentExample=new TbContentExample();
 			Criteria criteria = contentExample.createCriteria();
 			criteria.andCategoryIdEqualTo(categoryId);//根据id去查
 			criteria.andStatusEqualTo("1");//有效状态	
-			contentExample.setOrderByClause("sort_order");//排序		
-			return  contentMapper.selectByExample(contentExample);
+			contentExample.setOrderByClause("sort_order");//排序	
+			contentList = contentMapper.selectByExample(contentExample);
+			  redisTemplate.boundHashOps("content").put(categoryId, contentList);//存入缓存 			
+			} else {
+                System.out.println("从缓存中读取数据");
+			}
+			return  contentList; 
 		}
 
 	
