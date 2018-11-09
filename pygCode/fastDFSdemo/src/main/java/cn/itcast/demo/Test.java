@@ -13,8 +13,8 @@ public class Test {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, Exception {
 		// 1.加载配置文件
-		ClientGlobal.init("F:\\MyOwnCode\\pinyougouCode\\pygCode\\fastDFSdemo\\src\\main\\resources\\fdfs_client.conf");
-		
+		//ClientGlobal.init("F:\\MyOwnCode\\pinyougouCode\\pygCode\\fastDFSdemo\\src\\main\\resources\\fdfs_client.conf");
+		ClientGlobal.init("D:\\code\\pinyougou\\OnlineRetailers_pyg\\pygCode\\fastDFSdemo\\src\\main\\resources\\fdfs_client.conf");
 		// 2.构建一个管理者客户端
 		TrackerClient client=new TrackerClient();
 		// 3.连接管理者服务端
@@ -24,7 +24,7 @@ public class Test {
 		//5. 获取存储服务器的客户端对象
 		StorageClient storageClient=new StorageClient(trackerServer, storageServer);
 		//6.上传文件
-		String[] strings = storageClient.upload_file("e:\\image\\c.jpg", "jpg", null);
+		String[] strings = storageClient.upload_file("d:\\image\\wzq.jpg", "jpg", null);
 		//7.显示上传结果 file_id
 		for(String str:strings){
 			System.out.println(str);
