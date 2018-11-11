@@ -103,6 +103,12 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 				query.addFilterQuery(filterQuery);				
 			}
 		}
+		//1.6 分页查询		
+		Integer pageNo= (Integer) searchMap.get("pageNo");//提取页码
+		if(pageNo==null){
+			pageNo=1;//默认第一页
+		}
+
 
 		
 		
