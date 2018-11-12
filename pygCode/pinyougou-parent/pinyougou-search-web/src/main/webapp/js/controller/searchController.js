@@ -1,6 +1,6 @@
 app.controller('searchController',function($scope,searchService){	
 	
-	$scope.searchMap={'keywords':'','category':'','brand':'','spec':{},'price':'','pageNo':1,'pageSize':40 };//搜索条件封装对象
+	$scope.searchMap={'keywords':'','category':'','brand':'','spec':{},'price':'','pageNo':1,'pageSize':40,'sortField':'','sort':''};//搜索条件封装对象
 	//搜索
 	$scope.search=function(){
 		$scope.searchMap.pageNo= parseInt($scope.searchMap.pageNo);//字符串格式转化为integer
@@ -100,6 +100,13 @@ app.controller('searchController',function($scope,searchService){
 			return false;
 		}
 	}
+	//设置排序规则
+	$scope.sortSearch=function(sortField,sort){
+		$scope.searchMap.sortField=sortField;	
+		$scope.searchMap.sort=sort;	
+		$scope.search();
+	}
+
 	
 	
 
