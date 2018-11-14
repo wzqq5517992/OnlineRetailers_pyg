@@ -1,5 +1,6 @@
 package com.pinyougou.sellergoods.service.impl;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +13,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.mysql.fabric.xmlrpc.base.Array;
 import com.pinyougou.mapper.TbBrandMapper;
 import com.pinyougou.mapper.TbGoodsDescMapper;
 import com.pinyougou.mapper.TbGoodsMapper;
@@ -239,7 +241,7 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public void updateStatus(long[] ids, String status) {
+	public void updateStatus(Long[] ids, String status) {
 		for (long id : ids) {
 			TbGoods goods=goodsMapper.selectByPrimaryKey(id);
 			goods.setAuditStatus(status);
@@ -256,6 +258,17 @@ public class GoodsServiceImpl implements GoodsService {
 			goodsMapper.updateByPrimaryKey(goods);			
 		}
 		
+	}
+
+	@Override
+	public List<TbItem> findItemListByGoodsIdandStatus(Long[] goodsIds, String status) {
+		
+		TbItemExample example = new TbItemExample();
+		com.pinyougou.pojo.TbItemExample.Criteria criteria = example.createCriteria();
+		criteria.andStatusEqualTo(status);
+		criteria.andGoodsIdIn(Arrays.asList(goodsIds));//指定SPU的ID指定集合
+		return itemMapper.selectByExample(example);
+		 
 	}
 
 }
