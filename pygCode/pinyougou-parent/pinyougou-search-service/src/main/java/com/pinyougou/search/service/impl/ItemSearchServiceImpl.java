@@ -219,6 +219,16 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 
 	}
 
+	@Override
+	public void deleteByGoodsIds(List goodsIdList) {
+		System.out.println("删除商品ID"+goodsIdList);
+		Query query=new SimpleQuery("*:*");		
+		Criteria criteria=new Criteria("item_goodsid").in(goodsIdList);
+		query.addCriteria(criteria);
+		solrTemplate.delete(query);
+		solrTemplate.commit();		
+	}
+
 
 
 
