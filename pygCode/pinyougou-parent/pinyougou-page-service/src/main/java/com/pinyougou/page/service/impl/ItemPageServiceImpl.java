@@ -59,12 +59,12 @@ public class ItemPageServiceImpl implements ItemPageService {
 
 			//3.读取商品分类		
 			String itemCat1 = itemCatMapper.selectByPrimaryKey(goods.getCategory1Id()).getName();
+			System.out.println("itemCat1---:"+itemCat1);
 			String itemCat2 = itemCatMapper.selectByPrimaryKey(goods.getCategory2Id()).getName();
 			String itemCat3 = itemCatMapper.selectByPrimaryKey(goods.getCategory3Id()).getName();
 			dataModel.put("itemCat1", itemCat1);
 			dataModel.put("itemCat2", itemCat2);
 			dataModel.put("itemCat3", itemCat3);
-			System.out.println("itemCat1:"+dataModel.get(itemCat1));
 			Writer out=new FileWriter(pagedir+goodsId+".html");
 			template.process(dataModel, out);
 
