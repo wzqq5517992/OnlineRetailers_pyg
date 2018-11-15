@@ -5,10 +5,10 @@
     <artifactId>pinyougou-parent</artifactId>
     <version>0.0.5-SNAPSHOT</version>
   </parent>
-  <artifactId>pinyougou-content-service</artifactId>
+  <artifactId>pinyougou-page-service</artifactId>
   <packaging>war</packaging>
   
-  <dependencies>
+    <dependencies>
   
   		<!-- Spring -->
 	<dependency>
@@ -78,7 +78,6 @@
 		<scope>provided</scope>
 	</dependency>
 
-
 	<dependency>
 		<groupId>com.pinyougou</groupId>
 		<artifactId>pinyougou-dao</artifactId>
@@ -86,17 +85,19 @@
 	</dependency>
 	<dependency>
 		<groupId>com.pinyougou</groupId>
-		<artifactId>pinyougou-content-interface</artifactId>
+		<artifactId>pinyougou-page-interface</artifactId>
 		<version>0.0.5-SNAPSHOT</version>
 	</dependency>
-	<dependency>
-		<groupId>com.pinyougou</groupId>
-		<artifactId>pinyougou-common</artifactId>
-		<version>0.0.5-SNAPSHOT</version>
+	
+		<dependency>
+		<groupId>org.freemarker</groupId>
+		<artifactId>freemarker</artifactId>
+		<version>2.3.23</version>
 	</dependency>
-  </dependencies>
+	
+   </dependencies>
   
-  <build>
+  <build>  
 	  <plugins>	     
 	      <plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
@@ -104,7 +105,7 @@
 				<version>2.2</version>
 				<configuration>
 					<!-- 指定端口 -->
-					<port>9002</port>
+					<port>9005</port>
 					<!-- 请求路径 -->
 					<path>/</path>
 				</configuration>
