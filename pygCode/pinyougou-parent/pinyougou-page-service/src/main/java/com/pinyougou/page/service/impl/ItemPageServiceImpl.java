@@ -4,6 +4,7 @@ package com.pinyougou.page.service.impl;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,13 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.pinyougou.mapper.TbGoodsDescMapper;
 import com.pinyougou.mapper.TbGoodsMapper;
 import com.pinyougou.mapper.TbItemCatMapper;
+import com.pinyougou.mapper.TbItemMapper;
 import com.pinyougou.page.service.ItemPageService;
 import com.pinyougou.pojo.TbGoods;
 import com.pinyougou.pojo.TbGoodsDesc;
+import com.pinyougou.pojo.TbItem;
+import com.pinyougou.pojo.TbItemExample;
+import com.pinyougou.pojo.TbItemExample.Criteria;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -28,8 +33,8 @@ public class ItemPageServiceImpl implements ItemPageService {
 	@Value("${pagedir}")
 	private String pagedir;
 	
-	@Autowired
-	private FreeMarkerConfig freeMarkerConfig;
+//	@Autowired
+//	private FreeMarkerConfig freeMarkerConfig;
 	@Autowired
 	private FreeMarkerConfigurer   freeMarkerConfigurer  ;
 	
@@ -40,6 +45,9 @@ public class ItemPageServiceImpl implements ItemPageService {
 	private TbGoodsDescMapper goodsDescMapper;
 	@Autowired
 	private TbItemCatMapper itemCatMapper;
+	@Autowired
+	private TbItemMapper itemMapper;
+
 
 		
 	@Override
@@ -65,6 +73,16 @@ public class ItemPageServiceImpl implements ItemPageService {
 			dataModel.put("itemCat1", itemCat1);
 			dataModel.put("itemCat2", itemCat2);
 			dataModel.put("itemCat3", itemCat3);
+			
+			//4.读取SKU列表
+			TbItemExample example=new TbItemExample();
+			Criteria criteria = example.createCriteria();
+			criteria.andStatusEqualTo("1");//状态为有效
+			criteria.andGoodsIdEqualTo(goodsId);//指定SPU ID
+			example.setOrderByClause("is_default desc");//按照状态降序，保证第一个为默认			
+			List<TbItem> itemList = itemMapper.selectByExample(example);		
+			dataModel.put("itemList", itemList);
+			
 			Writer out=new FileWriter(pagedir+goodsId+".html");
 			template.process(dataModel, out);
 

@@ -28,7 +28,9 @@ public class GoodsController {
 	@Reference
 	private GoodsService goodsService;
 	@Reference(timeout=100000)
-	private ItemSearchService itemSearchService;	
+	private ItemSearchService itemSearchService;
+	@Reference(timeout=40000)
+	private ItemPageService itemPageService;
 	/**
 	 * 返回全部列表
 	 * @return
@@ -138,6 +140,12 @@ public class GoodsController {
 					System.out.println("没有明细数据");
 				}			
 			}
+			
+			//***********静态页生成************
+			for(Long goodsId:ids){
+				itemPageService.genItemHtml(goodsId);
+			}
+
 			return new Result(true, "审核完成");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -147,8 +155,7 @@ public class GoodsController {
 		
 	}
 	
-	@Reference(timeout=40000)
-	private ItemPageService itemPageService;
+
 	/**
 	 * 生成静态页（测试）
 	 * @param goodsId

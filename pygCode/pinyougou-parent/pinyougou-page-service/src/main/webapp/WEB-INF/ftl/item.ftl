@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 	<title>产品详情页</title>
-	 <link rel="icon" href="assets/img/favicon.ico">
+	<link rel="icon" href="assets/img/favicon.ico">
 
     <link rel="stylesheet" type="text/css" href="css/webbase.css" />
     <link rel="stylesheet" type="text/css" href="css/pages-item.css" />
@@ -17,9 +17,23 @@
     <script type="text/javascript" src="js/base.js"> </script>
     <script type="text/javascript" src="js/controller/itemController.js"> </script>
     
+    <script>
+	   var skuList=[    	    
+	    	    s<#list itemList as item>  	    	    	
+		    		{
+		    		"id":${item.id?c},
+		    		"title":"${item.title!''}",
+		    		"price":${item.price?c},		    		
+		    		"spec": ${item.spec}	
+		    		} ,     		
+	    		</#list>
+	   ];  
+    </script>
+    
+    
 </head>
 
-<body ng-app="pinyougou" ng-controller="itemController" ng-init="num=1">
+<body ng-app="pinyougou" ng-controller="itemController" ng-init="num=1;loadSku()">
 
 <!--页面顶部 开始-->
 <#include "head.ftl">
@@ -93,7 +107,7 @@
 				</div>
 				<div class="fr itemInfo-wrap">
 					<div class="sku-name">
-						<h4>${goods.goodsName}</h4>
+						<h4>{{sku.title}}</h4>
 					</div>
 				    <span><div class="news"><span>${goods.caption}</span></div>
 					<div class="summary">
@@ -103,7 +117,7 @@
 							</div>
 							<div class="fl price">
 								<i>¥</i>
-								<em>${goods.price}</em>
+								<em>{{sku.price}}</em>
 								<span>降价通知</span>
 							</div>
 							<div class="fr remark">
@@ -178,7 +192,7 @@
 							<div class="fl">
 								<ul class="btn-choose unstyled">
 									<li>
-										<a href="cart.html" target="_blank" class="sui-btn  btn-danger addshopcar">加入购物车</a>
+										<a href="cart.html" target="_blank"  ng-click="addToCart()"  class="sui-btn  btn-danger addshopcar">加入购物车</a>
 									</li>
 								</ul>
 							</div>
