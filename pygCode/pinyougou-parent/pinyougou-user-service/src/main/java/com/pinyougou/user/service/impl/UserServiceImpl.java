@@ -1,12 +1,23 @@
 package com.pinyougou.user.service.impl;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.MapMessage;
+import javax.jms.Message;
+import javax.jms.Session;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.pinyougou.mapper.TbUserMapper;
@@ -146,20 +157,52 @@ public class UserServiceImpl implements UserService {
 	}
 
 		@Autowired
-		private RedisTemplate<String , Object> redisTemplate;	
-
-		@Override
+		private RedisTemplate<String , Object> redisTemplate;
+		@Autowired
+        private JmsTemplate   jmsTemplate;
+		private Destination   smsDestination;
+		
 		/**
 		 * 生成短信验证码
 		 */
-		public void createSmsCode(String phone){
+		@Override
+		public void createSmsCode(final String phone){
 			//1.生成6位随机数
-			String code =  (long) (Math.random()*1000000)+"";
+			final String code =  (long) (Math.random()*1000000)+"";
 			System.out.println("验证码："+code);
 			//2.存入缓存redis
 			redisTemplate.boundHashOps("smscode").put(phone, code);
 			//3.发送到activeMQ	....
+			jmsTemplate.send(smsDestination, new MessageCreator() {			
+				@Override
+				public Message createMessage(Session session) throws JMSException {	
+					MapMessage mapMessage = session.createMapMessage();			
+					mapMessage.setString("mobile", phone);//手机号
+					mapMessage.setString("template_code", "SMS_85735065");//模板编号
+					mapMessage.setString("sign_name", "品优购");//签名				
+					Map m=new HashMap<>();
+					m.put("number", code);				
+					mapMessage.setString("param", JSON.toJSONString(m));//参数
+					return mapMessage;
+				}
+			});
+
+			
 		}
+
+   @Override
+   public boolean checkSmsCode(String phone, String code) {
+	    String redisCode=(String) redisTemplate.boundHashOps("smscode").get(phone);
+		if(redisCode==null){
+			return false;
+		}
+		if(!redisCode.equals(code)){
+			return false;
+		}
+		return true;	
+
+			
+  }
 
 	
 }
