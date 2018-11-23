@@ -12,6 +12,7 @@ import javax.jms.Session;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
@@ -162,6 +163,13 @@ public class UserServiceImpl implements UserService {
         private JmsTemplate   jmsTemplate;
 		private Destination   smsDestination;
 		
+		@Value("${template_code}")
+		private String template_code;
+		
+		@Value("${sign_name}")
+		private String sign_name;
+
+		
 		/**
 		 * 生成短信验证码
 		 */
@@ -178,8 +186,8 @@ public class UserServiceImpl implements UserService {
 				public Message createMessage(Session session) throws JMSException {	
 					MapMessage mapMessage = session.createMapMessage();			
 					mapMessage.setString("mobile", phone);//手机号
-					mapMessage.setString("template_code", "SMS_85735065");//模板编号
-					mapMessage.setString("sign_name", "品优购");//签名				
+					mapMessage.setString("template_code", template_code);//模板编号
+					mapMessage.setString("sign_name", sign_name);//签名				
 					Map m=new HashMap<>();
 					m.put("number", code);				
 					mapMessage.setString("param", JSON.toJSONString(m));//参数
