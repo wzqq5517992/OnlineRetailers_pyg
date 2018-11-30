@@ -50,10 +50,10 @@ public class UserController {
 	@RequestMapping("/add")
 	public Result add(@RequestBody TbUser user,String smscode){
 		try {
-			boolean checkSmsCode = userService.checkSmsCode(user.getPhone(), smscode);
-			if(checkSmsCode==false){
-				return new Result(false, "验证码输入错误！");			
-			}			
+//			boolean checkSmsCode = userService.checkSmsCode(user.getPhone(), smscode);
+//			if(checkSmsCode==false){
+//				return new Result(false, "验证码输入错误！");			
+//			}			
 			userService.add(user);
 			return new Result(true, "增加成功");
 		} catch (Exception e) {

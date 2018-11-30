@@ -161,6 +161,7 @@ public class UserServiceImpl implements UserService {
 		private RedisTemplate<String , Object> redisTemplate;
 		@Autowired
         private JmsTemplate   jmsTemplate;
+		@Autowired
 		private Destination   smsDestination;
 		
 		@Value("${template_code}")
@@ -181,19 +182,19 @@ public class UserServiceImpl implements UserService {
 			//2.存入缓存redis
 			redisTemplate.boundHashOps("smscode").put(phone, code);
 			//3.发送到activeMQ	....
-			jmsTemplate.send(smsDestination, new MessageCreator() {			
-				@Override
-				public Message createMessage(Session session) throws JMSException {	
-					MapMessage mapMessage = session.createMapMessage();			
-					mapMessage.setString("mobile", phone);//手机号
-					mapMessage.setString("template_code", template_code);//模板编号
-					mapMessage.setString("sign_name", sign_name);//签名				
-					Map m=new HashMap<>();
-					m.put("number", code);				
-					mapMessage.setString("param", JSON.toJSONString(m));//参数
-					return mapMessage;
-				}
-			});
+//			jmsTemplate.send(smsDestination, new MessageCreator() {			
+//				@Override
+//				public Message createMessage(Session session) throws JMSException {	
+//					MapMessage mapMessage = session.createMapMessage();			
+//					mapMessage.setString("mobile", phone);//手机号
+//					mapMessage.setString("template_code", template_code);//模板编号
+//					mapMessage.setString("sign_name", sign_name);//签名				
+//					Map m=new HashMap<>();
+//					m.put("number", code);				
+//					mapMessage.setString("param", JSON.toJSONString(m));//参数
+//					return mapMessage;
+//				}
+//			});
 
 			
 		}

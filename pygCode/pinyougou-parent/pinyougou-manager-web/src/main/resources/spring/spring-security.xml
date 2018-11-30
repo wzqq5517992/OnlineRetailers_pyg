@@ -15,7 +15,7 @@
 	<http use-expressions="false">
 		<!--当前用户必须有ROLE_USER的角色权限才可以访问根目录及其子目录的资源  -->
 		<intercept-url pattern="/**" access="ROLE_ADMIN" />
-		<!-- 开启表单登陆 -->
+		<!-- 开启表单登陆   及跨域关闭-->
 		<form-login login-page="/login.html" default-target-url="/admin/index.html" authentication-failure-url="/login.html" always-use-default-target="true"/>	
 		<csrf disabled="true"/>
 		
