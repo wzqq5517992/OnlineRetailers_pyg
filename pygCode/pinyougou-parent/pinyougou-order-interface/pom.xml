@@ -5,7 +5,7 @@
     <artifactId>pinyougou-parent</artifactId>
     <version>0.0.5-SNAPSHOT</version>
   </parent>
-  <artifactId>pinyougou-page-interface</artifactId>
+  <artifactId>pinyougou-order-interface</artifactId>
   <dependencies>
   	<dependency>
   		<groupId>com.pinyougou</groupId>

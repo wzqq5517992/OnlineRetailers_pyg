@@ -24,7 +24,7 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public List<Cart> addGoodsToCartList(List<Cart> cartList, Long itemId, Integer num) {
 		
-		//1.更具skuId查询sku对象
+		//1.根据skuId查询sku对象
 		TbItem item = itemMapper.selectByPrimaryKey(itemId);
 		if(item==null){
 			throw new RuntimeException("商品不存在");
