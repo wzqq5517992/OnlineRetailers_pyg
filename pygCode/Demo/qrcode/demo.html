@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>Demo</title>
+<meta charset="UTF-8">
+<script src="qrious.min.js" ></script>
+</head>
+<body>
+<img id="qrious">
+<script>
+
+	var qr=new QRious(
+	{
+	  element:document.getElementById('qrious'),
+	  size:250,
+	  value: 'http://www.baidu.com',
+	  level: 'H'
+	}
+	);
+</script>
+
+
+</body>
+</html>
