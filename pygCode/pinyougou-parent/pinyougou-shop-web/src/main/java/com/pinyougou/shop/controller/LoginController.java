@@ -19,7 +19,7 @@ public class LoginController {
 	@RequestMapping("/name")
 	public Map name(){
 		String name=SecurityContextHolder.getContext().getAuthentication().getName();
-		System.out.println(name);
+		System.out.println("用户名："+name);
 		Map map=new HashMap();
 		map.put("loginName", name);
 

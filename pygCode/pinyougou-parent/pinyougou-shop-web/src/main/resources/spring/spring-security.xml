@@ -45,7 +45,7 @@
 	<dubbo:reference id="sellerService"  interface="com.pinyougou.sellergoods.service.SellerService" >
 	</dubbo:reference>
 	<!-- bcrypt加密配置 -->
-	<beans:bean id="passwordbcryptEncoder"  
+	<beans:bean id="passwordbcryptEnfcoder"  
         class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	
 	

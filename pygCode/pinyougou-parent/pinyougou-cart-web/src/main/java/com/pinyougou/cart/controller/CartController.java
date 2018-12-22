@@ -38,7 +38,7 @@ public class CartController {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		System.out.println("当前登录人："+username);
 		
-		String cartListString = util.CookieUtil.getCookieValue(request, "cartList", "UTF-8");
+		String cartListString = CookieUtil.getCookieValue(request, "cartList", "UTF-8");
 		if(cartListString==null || cartListString.equals("")){
 			cartListString="[]";
 		}
@@ -46,8 +46,7 @@ public class CartController {
 		
 		if(username.equals("anonymousUser")){//如果未登录
 			//从cookie中提取购物车
-			System.out.println("从cookie中提取购物车");
-						
+			System.out.println("从cookie中提取购物车");						
 			return cartList_cookie;
 			
 		}else{//如果已登录
